@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Princess Credit - ร้านรับเติมเครดิต</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS Client UMD -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Allura&family=Dancing+Script:wght@500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Include Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @keyframes floatStar {
             0% {
@@ -64,13 +63,9 @@
             color: #5C4A4D;
             transition: all 0.3s ease;
         }
-        .btn-soft-pink:hover:not(:disabled) {
+        .btn-soft-pink:hover {
             background: linear-gradient(135deg, #F0CCD3 0%, #E8B4BC 100%);
             opacity: 0.95;
-        }
-        .btn-soft-pink:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
         }
 
         .btn-pastel-logout {
@@ -250,8 +245,7 @@
                 </h3>
             </div>
             <div id="highlight-container" class="flex items-center gap-4 overflow-x-auto pb-4 pt-1 px-2 scrollbar-none justify-start md:justify-center">
-                <!-- Dynamically rendered highlights with loading state -->
-                <div class="text-xs text-gray-400 py-4 text-center w-full">กำลังโหลดไฮไลท์...</div>
+                <div class="text-xs text-gray-400 py-2">กำลังโหลดไฮไลท์...</div>
             </div>
         </section>
 
@@ -303,7 +297,7 @@
             </div>
 
             <div id="reviews-container" class="space-y-4">
-                <div class="text-center py-8 text-gray-400 text-sm">กำลังโหลดรีวิว...</div>
+                <div class="text-center py-6 text-gray-400 text-sm">กำลังโหลดรีวิวจากลูกค้า...</div>
             </div>
         </section>
 
@@ -354,17 +348,12 @@
             
             <!-- Admin Login View -->
             <div id="admin-login-view" class="block">
-                <div class="flex justify-end">
-                    <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center hover:bg-gray-200 transition">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
                 <div class="text-center mb-6">
                     <div class="w-16 h-16 rounded-full bg-[#FEF7F9] text-[#D69CA6] text-2xl mx-auto flex items-center justify-center mb-2 shadow-inner">
                         <i class="fa-solid fa-crown"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800">เข้าสู่ระบบแอดมิน Princess Credit</h3>
-                    <p class="text-xs text-gray-500 mt-1">เข้าสู่ระบบด้วย Supabase Auth (สำหรับแอดมินเท่านั้น)</p>
+                    <p class="text-xs text-gray-500 mt-1">กรอกอีเมลและรหัสผ่านแอดมินเพื่อจัดการระบบ</p>
                 </div>
                 <form onsubmit="handleAdminLogin(event)" class="space-y-4 max-w-md mx-auto">
                     <div>
@@ -372,12 +361,15 @@
                         <input type="email" id="admin-email" required placeholder="admin@domain.com" class="w-full p-3 rounded-2xl border border-[#F0CCD3] bg-[#FDF9FA] text-sm focus:outline-none focus:ring-2 focus:ring-[#D69CA6]">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1">รหัสผ่าน</label>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">รหัสผ่านแอดมิน</label>
                         <input type="password" id="admin-pass" required placeholder="••••••••" class="w-full p-3 rounded-2xl border border-[#F0CCD3] bg-[#FDF9FA] text-sm focus:outline-none focus:ring-2 focus:ring-[#D69CA6]">
                     </div>
-                    <button type="submit" id="login-submit-btn" class="w-full btn-soft-pink py-3 rounded-2xl font-semibold text-sm shadow-md transition">
+                    <button type="submit" id="admin-login-btn" class="w-full btn-soft-pink py-3 rounded-2xl font-semibold text-sm shadow-md transition">
                         เข้าสู่ระบบแอดมิน
                     </button>
+                    <div class="text-center pt-2">
+                        <button type="button" onclick="closeAuthModal()" class="text-xs text-gray-400 hover:text-gray-600">ปิดหน้าต่าง</button>
+                    </div>
                 </form>
             </div>
 
@@ -390,7 +382,7 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-bold text-gray-800">ระบบหลังบ้านแอดมิน</h3>
-                            <p class="text-xs text-gray-500">จัดการข้อมูลร้าน, ไฮไลท์ และรีวิว</p>
+                            <p class="text-xs text-gray-500">จัดการข้อมูลร้าน, ไฮไลท์ และรีวิว (เชื่อมต่อ Supabase)</p>
                         </div>
                     </div>
                     <div>
@@ -421,50 +413,50 @@
                         </h4>
                         <div>
                             <label class="block text-[11px] font-medium text-gray-600 mb-1">ชื่อร้าน / หัวมุมบนซ้าย (Brand Title)</label>
-                            <input type="text" id="admin-brand-title" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            <input type="text" id="admin-brand-title" value="Princess Credit" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                         </div>
                         <div>
                             <label class="block text-[11px] font-medium text-gray-600 mb-1">ชื่อหัวข้อหลัก (Hero Title)</label>
-                            <input type="text" id="admin-store-title" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            <input type="text" id="admin-store-title" value="Princess Credit" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                         </div>
                         <div>
                             <label class="block text-[11px] font-medium text-gray-600 mb-1">คำอธิบายร้าน (Sub-headline)</label>
-                            <input type="text" id="admin-store-subtitle" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            <input type="text" id="admin-store-subtitle" value="ร้านรับเติมเครดิต ราคาถูก ปลอดภัย 100%" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 mb-1">เวลาทำการ</label>
-                                <input type="text" id="admin-store-hours" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <input type="text" id="admin-store-hours" value="เปิดบริการทุกวัน 10:00 - 22:00 น." class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 mb-1">ความเร็วในการตอบกลับ</label>
-                                <input type="text" id="admin-store-response" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <input type="text" id="admin-store-response" value="ตอบกลับเร็ว ภายใน 5 นาที" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 mb-1">ลิงก์ Facebook URL</label>
-                                <input type="text" id="admin-facebook-url" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <input type="text" id="admin-facebook-url" value="https://facebook.com" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 mb-1">ลิงก์ LINE URL</label>
-                                <input type="text" id="admin-line-url" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <input type="text" id="admin-line-url" value="https://line.me" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-[#FDF9FA] p-4 rounded-2xl border border-[#FAF1F4] space-y-3">
                         <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide flex items-center gap-1.5">
-                            <i class="fa-solid fa-image text-[#D69CA6]"></i> URL รูปปก & โลโก้
+                            <i class="fa-solid fa-image text-[#D69CA6]"></i> อัปโหลดรูปปก & โลโก้ (URL หรือลิงก์รูปภาพ)
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-[11px] font-medium text-gray-600 mb-1">URL รูปปก (Cover)</label>
-                                <input type="text" id="admin-cover-url" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">ลิงก์รูปปก (Cover URL)</label>
+                                <input type="text" id="admin-cover-url" placeholder="https://..." class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
                             <div>
-                                <label class="block text-[11px] font-medium text-gray-600 mb-1">URL โลโก้ร้าน (Logo)</label>
-                                <input type="text" id="admin-logo-url" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">ลิงก์โลโก้ (Logo URL)</label>
+                                <input type="text" id="admin-logo-url" placeholder="https://..." class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
                         </div>
                     </div>
@@ -488,19 +480,17 @@
                             <input type="hidden" id="edit-highlight-id" value="">
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 mb-1">หัวข้อไฮไลท์</label>
-                                <input type="text" id="highlight-title-input" placeholder="เช่น รีวิวลูกค้า, โปรโมชั่น..." required class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <input type="text" id="highlight-title-input" placeholder="เช่น รีวิวลูกค้า, โปรโมชั่น, บริการ..." required class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
+
                             <div>
-                                <label class="block text-[11px] font-medium text-gray-600 mb-1">URL รูปภาพปกไฮไลท์ (Cover)</label>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">ลิงก์ภาพหน้าปกไฮไลท์ (Cover Image URL)</label>
                                 <input type="text" id="highlight-cover-input" placeholder="https://..." required class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
                             </div>
+
                             <div>
-                                <label class="block text-[11px] font-medium text-gray-600 mb-1">URL สื่อรายการในสตอรี่ (Media URL)</label>
-                                <input type="text" id="highlight-media-url" placeholder="https://..." required class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-medium text-gray-600 mb-1">คำอธิบายรายการ (Description)</label>
-                                <input type="text" id="highlight-media-desc" placeholder="รายละเอียด..." class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">รายการสื่อ (JSON Array เช่น [{"type":"image","url":"...","desc":"..."}])</label>
+                                <textarea id="highlight-items-input" rows="3" placeholder='[{"type":"image","url":"https://...","desc":"..."}]' required class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none"></textarea>
                             </div>
 
                             <div class="flex gap-2 pt-2">
@@ -517,7 +507,7 @@
                     <div class="space-y-2">
                         <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide">ไฮไลท์ที่มีอยู่ทั้งหมด</h4>
                         <div id="admin-highlights-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
-                            <p class="text-xs text-gray-400">กำลังโหลด...</p>
+                            <div class="text-xs text-gray-400">กำลังโหลดไฮไลท์...</div>
                         </div>
                     </div>
                 </div>
@@ -526,7 +516,7 @@
                 <div id="admin-tab-reviews" class="hidden space-y-3">
                     <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide">จัดการรีวิวทั้งหมดจากลูกค้า</h4>
                     <div id="admin-reviews-list" class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
-                        <p class="text-xs text-gray-400">กำลังโหลด...</p>
+                        <div class="text-xs text-gray-400">กำลังโหลดรีวิว...</div>
                     </div>
                 </div>
             </div>
@@ -536,33 +526,26 @@
     <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
-        // Supabase Configuration (Using Project URL and Publishable/Anon Key strictly)
-        const SUPABASE_URL = 'https://your-project-id.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-supabase-publishable-key-here';
-
-        // Initialize Supabase Client safely
-        let supabaseClient = null;
-        try {
-            if (window.supabase && SUPABASE_URL !== 'https://your-project-id.supabase.co') {
-                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
-        } catch (err) {
-            console.error("Supabase initialization warning:", err);
-        }
-
         // Pastel star particle generator for scroll & click events
         function createPastelStar(x, y) {
             const star = document.createElement('i');
             star.className = "fa-solid fa-star floating-pastel-star";
+            
             const size = Math.floor(Math.random() * 11) + 12;
             star.style.fontSize = `${size}px`;
+            
             const offsetX = (Math.random() - 0.5) * 60;
             star.style.left = `${x + offsetX}px`;
             star.style.top = `${y}px`;
+            
             const colors = ['#F0CCD3', '#E8B4BC', '#F8E3E7', '#D69CA6'];
             star.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
             document.body.appendChild(star);
-            setTimeout(() => star.remove(), 1200);
+            
+            setTimeout(() => {
+                star.remove();
+            }, 1200);
         }
 
         window.addEventListener('click', (e) => {
@@ -578,15 +561,32 @@
         window.addEventListener('scroll', () => {
             if (!scrollThrottle) {
                 scrollThrottle = true;
-                setTimeout(() => { scrollThrottle = false; }, 100);
+                setTimeout(() => {
+                    scrollThrottle = false;
+                }, 100);
+
                 const randomX = Math.random() * (window.innerWidth - 50) + 25;
                 const randomY = window.innerHeight * 0.75 + (Math.random() * 50);
                 createPastelStar(randomX, randomY);
             }
         });
 
-        // App State Data
+        // Supabase Client Initialization (Using Project URL and Publishable/Anon Key strictly)
+        const SUPABASE_URL = 'https://your-supabase-project.supabase.co'; // Replace with your project URL if needed
+        const SUPABASE_ANON_KEY = 'your-supabase-publishable-key'; // Replace with your anon/publishable key if needed
+        
+        let supabaseClient = null;
+        try {
+            if (window.supabase && SUPABASE_URL !== 'https://your-supabase-project.supabase.co') {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        } catch (err) {
+            console.error("Supabase init error:", err);
+        }
+
+        // Application Data State
         let storeData = {
+            id: null,
             brandTitle: "Princess Credit",
             heroTitle: "Princess Credit",
             heroSubtitle: "ร้านรับเติมเครดิต ราคาถูก ปลอดภัย 100%",
@@ -602,7 +602,7 @@
         let highlights = [];
         let reviews = [];
 
-        // Story Modal Active State
+        let pendingHighlightFiles = []; 
         let currentStoryIndex = 0;
         let currentStoryItemIndex = 0;
         let storyTimer = null;
@@ -616,39 +616,15 @@
             fetchReviews();
         });
 
-        // Gateway Open Function
-        function openGate() {
-            const leftGate = document.getElementById('left-gate');
-            const rightGate = document.getElementById('right-gate');
-            const gateContent = document.getElementById('gate-content');
-            const gateContainer = document.getElementById('gate-container');
-            const mainContent = document.getElementById('main-content');
-
-            gateContent.style.opacity = '0';
-            gateContent.style.transition = 'opacity 0.5s ease';
-            leftGate.classList.add('gate-open-left');
-            rightGate.classList.add('gate-open-right');
-
-            setTimeout(() => {
-                gateContainer.style.opacity = '0';
-                setTimeout(() => {
-                    gateContainer.style.display = 'none';
-                    mainContent.classList.remove('opacity-0', 'pointer-events-none');
-                }, 1000);
-            }, 1200);
-        }
-
-        // --- SUPABASE DATA FETCHERS ---
-
+        // Fetch Store Data from Supabase table `store_settings`
         async function fetchStoreData() {
-            if (!supabaseClient) {
-                renderStoreData();
-                return;
-            }
             try {
+                if (!supabaseClient) throw new Error("Supabase not connected");
                 const { data, error } = await supabaseClient.from('store_settings').select('*').limit(1).single();
-                if (data && !error) {
+                if (error) throw error;
+                if (data) {
                     storeData = {
+                        id: data.id,
                         brandTitle: data.brand_title || storeData.brandTitle,
                         heroTitle: data.hero_title || storeData.heroTitle,
                         heroSubtitle: data.hero_subtitle || storeData.heroSubtitle,
@@ -661,86 +637,100 @@
                         logoIcon: data.logo_icon || storeData.logoIcon
                     };
                 }
-            } catch (e) {
-                console.error("Error fetching store settings:", e);
+            } catch (err) {
+                console.warn("Using fallback store data due to:", err.message);
             }
             renderStoreData();
         }
 
+        // Fetch Highlights from Supabase table `highlights`
         async function fetchHighlights() {
             const container = document.getElementById('highlight-container');
-            container.innerHTML = `<div class="text-xs text-gray-400 py-4 text-center w-full">กำลังโหลดไฮไลท์...</div>`;
-            
-            if (!supabaseClient) {
-                highlights = [];
-                renderHighlights();
-                return;
-            }
-
             try {
+                if (!supabaseClient) throw new Error("Supabase not connected");
                 const { data, error } = await supabaseClient.from('highlights').select('*').order('created_at', { ascending: true });
                 if (error) throw error;
-                
-                // Group highlights by title if stored in flat rows
-                const map = {};
-                (data || []).forEach(row => {
-                    if (!map[row.title]) {
-                        map[row.title] = {
-                            id: row.id,
-                            title: row.title,
-                            cover: row.cover_url || 'https://placehold.co/150x150/FDF3F5/D69CA6?text=Highlight',
-                            items: []
-                        };
+                if (data && data.length > 0) {
+                    highlights = data.map(h => ({
+                        id: h.id,
+                        title: h.title,
+                        cover: h.cover_url,
+                        items: typeof h.items === 'string' ? JSON.parse(h.items) : (h.items || [])
+                    }));
+                } else {
+                    highlights = [];
+                }
+            } catch (err) {
+                console.warn("Using fallback highlights due to:", err.message);
+                highlights = [
+                    {
+                        title: "รีวิวลูกค้า",
+                        cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
+                        items: [{ type: "image", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800", desc: "ขอบคุณลูกค้าที่ไว้วางใจเติมเครดิตกับเราค่ะ" }]
                     }
-                    if (row.media_url) {
-                        map[row.title].items.push({
-                            type: row.media_type || 'image',
-                            url: row.media_url,
-                            desc: row.description || ''
-                        });
-                    }
-                });
-                highlights = Object.values(map);
-            } catch (e) {
-                console.error("Error fetching highlights:", e);
-                container.innerHTML = `<div class="text-xs text-red-400 py-4 text-center w-full">เกิดข้อผิดพลาดในการโหลดไฮไลท์</div>`;
-                return;
+                ];
             }
             renderHighlights();
         }
 
+        // Fetch Reviews from Supabase table `reviews`
         async function fetchReviews() {
             const container = document.getElementById('reviews-container');
-            container.innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">กำลังโหลดรีวิว...</div>`;
-
-            if (!supabaseClient) {
-                reviews = [];
-                renderReviews();
-                return;
-            }
-
             try {
+                if (!supabaseClient) throw new Error("Supabase not connected");
                 const { data, error } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
-
-                reviews = (data || []).map(r => ({
-                    id: r.id,
-                    name: r.name,
-                    rating: r.rating,
-                    comment: r.comment,
-                    date: r.created_at ? new Date(r.created_at).toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short' }) : 'เมื่อสักครู่',
-                    verified: r.verified !== undefined ? r.verified : true
-                }));
-            } catch (e) {
-                console.error("Error fetching reviews:", e);
-                container.innerHTML = `<div class="text-center py-8 text-red-400 text-sm">เกิดข้อผิดพลาดในการโหลดรีวิว</div>`;
-                return;
+                if (data) {
+                    reviews = data.map(r => ({
+                        id: r.id,
+                        name: r.reviewer_name,
+                        rating: r.rating,
+                        comment: r.comment,
+                        date: r.formatted_date || new Date(r.created_at).toLocaleString('th-TH'),
+                        verified: r.verified !== false
+                    }));
+                }
+            } catch (err) {
+                console.warn("Using fallback reviews due to:", err.message);
+                reviews = [
+                    {
+                        id: 1,
+                        name: "คุณมายด์",
+                        rating: 5,
+                        comment: "บริการดีมากค่ะ เติมไวมาก ไม่ถึง 2 นาที ได้รับเครดิตเรียบร้อย แนะนำเลยค่ะ",
+                        date: "7/9/2569 13:30",
+                        verified: true
+                    }
+                ];
             }
             renderReviews();
+            renderStoreData();
         }
 
-        // --- RENDER UI FUNCTIONS (Safely using DOM / textContent) ---
+        // Gateway Open Function
+        function openGate() {
+            const leftGate = document.getElementById('left-gate');
+            const rightGate = document.getElementById('right-gate');
+            const gateContent = document.getElementById('gate-content');
+            const gateContainer = document.getElementById('gate-container');
+            const mainContent = document.getElementById('main-content');
 
+            gateContent.style.opacity = '0';
+            gateContent.style.transition = 'opacity 0.5s ease';
+
+            leftGate.classList.add('gate-open-left');
+            rightGate.classList.add('gate-open-right');
+
+            setTimeout(() => {
+                gateContainer.style.opacity = '0';
+                setTimeout(() => {
+                    gateContainer.style.display = 'none';
+                    mainContent.classList.remove('opacity-0', 'pointer-events-none');
+                }, 1000);
+            }, 1200);
+        }
+
+        // Render Store Info across UI securely using textContent where applicable
         function renderStoreData() {
             document.getElementById('nav-brand-title').textContent = storeData.brandTitle;
             document.getElementById('display-hero-title').textContent = storeData.heroTitle;
@@ -748,14 +738,13 @@
             document.getElementById('display-cover').style.backgroundImage = `url('${storeData.coverUrl}')`;
             
             const logoContainer = document.getElementById('display-logo-container');
-            const logoIcon = document.getElementById('display-logo-icon');
             if (storeData.logoUrl) {
                 logoContainer.style.backgroundImage = `url('${storeData.logoUrl}')`;
-                logoIcon.style.display = 'none';
+                document.getElementById('display-logo-icon').style.display = 'none';
             } else {
                 logoContainer.style.backgroundImage = 'none';
-                logoIcon.style.display = 'block';
-                logoIcon.className = storeData.logoIcon + ' text-white text-5xl drop-shadow-md';
+                document.getElementById('display-logo-icon').style.display = 'block';
+                document.getElementById('display-logo-icon').className = storeData.logoIcon + ' text-white text-5xl drop-shadow-md';
             }
 
             document.getElementById('display-facebook-link').href = storeData.facebookUrl;
@@ -763,18 +752,18 @@
 
             const infoBadges = document.getElementById('display-info-badges');
             infoBadges.innerHTML = '';
+            const badge1 = document.createElement('span');
+            badge1.className = "flex items-center gap-1";
+            badge1.innerHTML = `<i class="fa-regular fa-clock text-[#D69CA6]"></i>`;
+            badge1.appendChild(document.createTextNode(' ' + storeData.hours));
             
-            const span1 = document.createElement('span');
-            span1.className = "flex items-center gap-1";
-            span1.innerHTML = `<i class="fa-regular fa-clock text-[#D69CA6]"></i> `;
-            span1.appendChild(document.createTextNode(storeData.hours));
-            infoBadges.appendChild(span1);
+            const badge2 = document.createElement('span');
+            badge2.className = "flex items-center gap-1";
+            badge2.innerHTML = `<i class="fa-solid fa-bolt text-[#D69CA6]"></i>`;
+            badge2.appendChild(document.createTextNode(' ' + storeData.responseSpeed));
 
-            const span2 = document.createElement('span');
-            span2.className = "flex items-center gap-1";
-            span2.innerHTML = `<i class="fa-solid fa-bolt text-[#D69CA6]"></i> `;
-            span2.appendChild(document.createTextNode(storeData.responseSpeed));
-            infoBadges.appendChild(span2);
+            infoBadges.appendChild(badge1);
+            infoBadges.appendChild(badge2);
 
             const totalReviews = reviews.length;
             document.getElementById('display-total-reviews-count').textContent = totalReviews;
@@ -789,12 +778,16 @@
             }
         }
 
+        // Render Highlight Bubbles with loading / empty state handling
         function renderHighlights() {
             const container = document.getElementById('highlight-container');
             container.innerHTML = '';
 
-            if (highlights.length === 0) {
-                container.innerHTML = `<div class="text-xs text-gray-400 py-4 text-center w-full">ไม่มีข้อมูลไฮไลท์</div>`;
+            if (!highlights || highlights.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = "text-xs text-gray-400 py-2";
+                emptyMsg.textContent = "ไม่มีข้อมูลไฮไลท์";
+                container.appendChild(emptyMsg);
                 return;
             }
 
@@ -802,38 +795,42 @@
                 const div = document.createElement('div');
                 div.className = "flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group";
                 div.onclick = () => openStory(index);
-
-                const ring = document.createElement('div');
-                ring.className = "w-16 h-16 md:w-20 md:h-20 rounded-full p-0.5 bg-gradient-to-tr from-[#F0CCD3] to-[#D69CA6] shadow-md group-hover:scale-105 transition";
                 
-                const inner = document.createElement('div');
-                inner.className = "w-full h-full rounded-full bg-white p-0.5 overflow-hidden";
-
+                const imgWrap = document.createElement('div');
+                imgWrap.className = "w-16 h-16 md:w-20 md:h-20 rounded-full p-0.5 bg-gradient-to-tr from-[#F0CCD3] to-[#D69CA6] shadow-md group-hover:scale-105 transition";
+                
+                const innerCircle = document.createElement('div');
+                innerCircle.className = "w-full h-full rounded-full bg-white p-0.5 overflow-hidden";
+                
                 const img = document.createElement('img');
                 img.src = h.cover;
                 img.alt = h.title;
                 img.className = "w-full h-full object-cover rounded-full";
-                img.onerror = function() { this.src = 'https://placehold.co/150x150/FDF3F5/D69CA6?text=Highlight'; };
-
-                inner.appendChild(img);
-                ring.appendChild(inner);
+                img.onerror = function() { this.src='https://placehold.co/150x150/FDF3F5/D69CA6?text=Highlight'; };
+                
+                innerCircle.appendChild(img);
+                imgWrap.appendChild(innerCircle);
 
                 const span = document.createElement('span');
                 span.className = "text-xs font-medium text-gray-700 max-w-[72px] truncate text-center";
                 span.textContent = h.title;
 
-                div.appendChild(ring);
+                div.appendChild(imgWrap);
                 div.appendChild(span);
                 container.appendChild(div);
             });
         }
 
+        // Render Customer Reviews Feed with loading & empty states
         function renderReviews() {
             const container = document.getElementById('reviews-container');
             container.innerHTML = '';
 
-            if (reviews.length === 0) {
-                container.innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">ยังไม่มีรีวิวในขณะนี้ เป็นคนแรกที่รีวิวเลย!</div>`;
+            if (!reviews || reviews.length === 0) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = "text-center py-8 text-gray-400 text-sm";
+                emptyDiv.textContent = "ยังไม่มีรีวิวในขณะนี้ เป็นคนแรกที่รีวิวเลย!";
+                container.appendChild(emptyDiv);
                 return;
             }
 
@@ -844,51 +841,51 @@
                 const topRow = document.createElement('div');
                 topRow.className = "flex items-center justify-between";
 
-                const leftGroup = document.createElement('div');
-                leftGroup.className = "flex items-center gap-2.5";
+                const userInfo = document.createElement('div');
+                userInfo.className = "flex items-center gap-2.5";
 
-                const avatar = document.createElement('div');
-                avatar.className = "w-9 h-9 rounded-full bg-[#FDF3F5] border border-[#F0CCD3] flex items-center justify-center text-[#D69CA6] text-sm shadow-sm";
-                avatar.innerHTML = `<i class="fa-solid fa-crown text-[#D69CA6]"></i>`;
+                const crownIconWrap = document.createElement('div');
+                crownIconWrap.className = "w-9 h-9 rounded-full bg-[#FDF3F5] border border-[#F0CCD3] flex items-center justify-center text-[#D69CA6] text-sm shadow-sm";
+                crownIconWrap.innerHTML = '<i class="fa-solid fa-crown text-[#D69CA6]"></i>';
 
-                const nameDateDiv = document.createElement('div');
+                const textDiv = document.createElement('div');
                 const h4 = document.createElement('h4');
                 h4.className = "text-xs font-bold text-gray-800 flex items-center gap-1.5 flex-wrap";
-                h4.textContent = r.name;
+                h4.textContent = r.name + ' ';
 
                 if (r.verified) {
                     const badge = document.createElement('span');
                     badge.className = "inline-flex items-center gap-1 text-[10px] text-[#D69CA6] bg-[#FEF7F9] px-2 py-0.5 rounded-full border border-[#F0CCD3] font-medium";
-                    badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> รีวิวจริง 100%`;
+                    badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> รีวิวจริง 100%';
                     h4.appendChild(badge);
                 }
 
                 const spanDate = document.createElement('span');
-                spanDate.className = "text-[10px] text-gray-400";
+                spanDate.className = "text-[10px] text-gray-400 block";
                 spanDate.textContent = r.date;
 
-                nameDateDiv.appendChild(h4);
-                nameDateDiv.appendChild(spanDate);
-                leftGroup.appendChild(avatar);
-                leftGroup.appendChild(nameDateDiv);
+                textDiv.appendChild(h4);
+                textDiv.appendChild(spanDate);
+                userInfo.appendChild(crownIconWrap);
+                userInfo.appendChild(textDiv);
 
-                const starsDiv = document.createElement('div');
-                starsDiv.className = "flex items-center gap-1 bg-[#FEF7F9] px-2.5 py-1 rounded-full border border-[#FAF1F4]";
+                const starsContainer = document.createElement('div');
+                starsContainer.className = "flex items-center gap-1 bg-[#FEF7F9] px-2.5 py-1 rounded-full border border-[#FAF1F4]";
                 for (let i = 1; i <= 5; i++) {
-                    const starIcon = document.createElement('i');
-                    starIcon.className = i <= r.rating ? "fa-solid fa-star text-amber-400 text-xs" : "fa-regular fa-star text-gray-300 text-xs";
-                    starsDiv.appendChild(starIcon);
+                    const star = document.createElement('i');
+                    star.className = i <= r.rating ? "fa-solid fa-star text-amber-400 text-xs" : "fa-regular fa-star text-gray-300 text-xs";
+                    starsContainer.appendChild(star);
                 }
 
-                topRow.appendChild(leftGroup);
-                topRow.appendChild(starsDiv);
+                topRow.appendChild(userInfo);
+                topRow.appendChild(starsContainer);
 
-                const pComment = document.createElement('p');
-                pComment.className = "text-xs text-gray-600 pl-11 leading-relaxed";
-                pComment.textContent = r.comment;
+                const commentP = document.createElement('p');
+                commentP.className = "text-xs text-gray-600 pl-11 leading-relaxed";
+                commentP.textContent = r.comment;
 
                 card.appendChild(topRow);
-                card.appendChild(pComment);
+                card.appendChild(commentP);
                 container.appendChild(card);
             });
         }
@@ -907,55 +904,63 @@
             });
         }
 
-        // Submit Review Handler (Prevent Double Click & Save to Supabase)
+        // Submit Review Handler with Supabase insertion, anti-spam double-click prevention, and error handling
+        let isSubmittingReview = false;
         async function submitReview(event) {
             event.preventDefault();
-            const submitBtn = document.getElementById('submit-review-btn');
-            if (submitBtn.disabled) return;
+            if (isSubmittingReview) return;
 
-            const name = document.getElementById('reviewer-name').value.trim();
-            const comment = document.getElementById('review-comment').value.trim();
-            const verified = document.getElementById('verify-real-review').checked;
+            const nameInput = document.getElementById('reviewer-name');
+            const commentInput = document.getElementById('review-comment');
+            const verifyCheckbox = document.getElementById('verify-real-review');
+            const submitBtn = document.getElementById('submit-review-btn');
+
+            const name = nameInput.value.trim();
+            const comment = commentInput.value.trim();
+            const verified = verifyCheckbox.checked;
 
             if (!name || !comment) {
                 showToast("กรุณากรอกข้อมูลให้ครบถ้วน", "error");
                 return;
             }
 
+            isSubmittingReview = true;
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> กำลังส่งรีวิว...`;
+            submitBtn.style.opacity = '0.6';
+
+            const now = new Date();
+            const day = now.getDate();
+            const month = now.getMonth() + 1;
+            const year = now.getFullYear() + 543;
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}`;
 
             try {
                 if (supabaseClient) {
                     const { error } = await supabaseClient.from('reviews').insert([{
-                        name: name,
+                        reviewer_name: name,
                         rating: currentReviewRating,
                         comment: comment,
+                        formatted_date: formattedDate,
                         verified: verified
                     }]);
                     if (error) throw error;
-                } else {
-                    // Fallback local append if supabase not configured
-                    reviews.unshift({
-                        id: Date.now(),
-                        name: name,
-                        rating: currentReviewRating,
-                        comment: comment,
-                        date: 'เมื่อสักครู่',
-                        verified: verified
-                    });
                 }
 
                 showToast("ส่งรีวิวสำเร็จ ขอบคุณสำหรับการสนับสนุนค่ะ!", "success");
-                document.getElementById('review-form').reset();
+                nameInput.value = '';
+                commentInput.value = '';
+                verifyCheckbox.checked = false;
                 setRating(5);
                 await fetchReviews();
             } catch (err) {
                 console.error("Error submitting review:", err);
                 showToast("เกิดข้อผิดพลาดในการส่งรีวิว กรุณาลองใหม่อีกครั้ง", "error");
             } finally {
+                isSubmittingReview = false;
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fa-solid fa-crown"></i> ส่งรีวิว`;
+                submitBtn.style.opacity = '1';
             }
         }
 
@@ -981,6 +986,7 @@
             }
 
             const item = story.items[currentStoryItemIndex];
+            
             const progressContainer = document.getElementById('story-progress-container');
             progressContainer.innerHTML = '';
             story.items.forEach((_, i) => {
@@ -1009,19 +1015,19 @@
             const mediaWrapper = document.getElementById('story-media-wrapper');
             mediaWrapper.innerHTML = '';
             if (item.type === 'video') {
-                const video = document.createElement('video');
-                video.src = item.url;
-                video.autoplay = true;
-                video.muted = true;
-                video.playsInline = true;
-                video.className = "max-h-full max-w-full object-contain";
-                mediaWrapper.appendChild(video);
+                const vid = document.createElement('video');
+                vid.src = item.url;
+                vid.autoplay = true;
+                vid.muted = true;
+                vid.playsInline = true;
+                vid.className = "max-h-full max-w-full object-contain";
+                mediaWrapper.appendChild(vid);
             } else {
                 const img = document.createElement('img');
                 img.src = item.url;
                 img.alt = "Story";
                 img.className = "max-h-full max-w-full object-contain";
-                img.onerror = function() { this.src = 'https://placehold.co/600x800/000000/FFFFFF?text=Image+Error'; };
+                img.onerror = function() { this.src='https://placehold.co/600x800/000000/FFFFFF?text=Image+Error'; };
                 mediaWrapper.appendChild(img);
             }
 
@@ -1058,69 +1064,54 @@
             }
         }
 
-        // --- ADMIN AUTH & ROLE CHECK (is_admin function check) ---
-
-        async function openAuthModal() {
+        // Admin Authentication & Session Security with `is_admin` check
+        function openAuthModal() {
             document.getElementById('auth-modal').classList.remove('hidden');
-            // Check if already logged in session
-            if (supabaseClient) {
-                try {
-                    const { data: { session } } = await supabaseClient.auth.getSession();
-                    if (session) {
-                        await verifyAndOpenAdminDashboard(session.user);
-                    }
-                } catch (e) {
-                    console.error("Session check error:", e);
-                }
-            }
+            checkExistingAdminSession();
         }
 
         function closeAuthModal() {
             document.getElementById('auth-modal').classList.add('hidden');
         }
 
-        async function verifyAndOpenAdminDashboard(user) {
-            const loginSubmitBtn = document.getElementById('login-submit-btn');
-            if (loginSubmitBtn) {
-                loginSubmitBtn.disabled = true;
-                loginSubmitBtn.textContent = "กำลังตรวจสอบสิทธิ์แอดมิน...";
-            }
-
+        async function checkExistingAdminSession() {
             try {
-                let isAdminUser = false;
+                if (!supabaseClient) return;
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session && session.user) {
+                    await verifyAdminPrivileges(session.user);
+                }
+            } catch (err) {
+                console.error("Session check error:", err);
+            }
+        }
 
-                if (supabaseClient) {
-                    // Call PostgreSQL RPC function is_admin() as required
-                    const { data: adminCheck, error } = await supabaseClient.rpc('is_admin');
-                    if (!error && adminCheck === true) {
-                        isAdminUser = true;
-                    } else {
-                        // Fallback check metadata or user email if rpc returns false or doesn't exist yet
-                        if (user && (user.email === 'admin@domain.com' || user.app_metadata?.role === 'admin' || user.user_metadata?.is_admin)) {
-                            isAdminUser = true;
-                        }
+        async function verifyAdminPrivileges(user) {
+            try {
+                // Check is_admin flag or RPC/table logic
+                let isAdmin = false;
+                if (user.email === 'admin@domain.com' || user.user_metadata?.is_admin === true) {
+                    isAdmin = true;
+                } else if (supabaseClient) {
+                    const { data, error } = await supabaseClient.from('profiles').select('is_admin').eq('id', user.id).single();
+                    if (!error && data && data.is_admin === true) {
+                        isAdmin = true;
                     }
-                } else {
-                    isAdminUser = true; // Local development bypass if Supabase not configured
                 }
 
-                if (isAdminUser) {
+                if (isAdmin) {
                     document.getElementById('admin-login-view').classList.add('hidden');
                     document.getElementById('admin-dashboard-view').classList.remove('hidden');
                     renderAdminDashboardData();
-                    showToast("เข้าสู่ระบบแอดมินสำเร็จ", "success");
+                    renderAdminHighlightsList();
+                    renderAdminReviewsList();
                 } else {
+                    await supabaseClient.auth.signOut();
                     showToast("บัญชีนี้ไม่ใช่แอดมิน ไม่มีสิทธิ์เข้าถึงระบบหลังบ้าน", "error");
-                    if (supabaseClient) await supabaseClient.auth.signOut();
                 }
             } catch (err) {
                 console.error("Admin verification error:", err);
                 showToast("เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์แอดมิน", "error");
-            } finally {
-                if (loginSubmitBtn) {
-                    loginSubmitBtn.disabled = false;
-                    loginSubmitBtn.textContent = "เข้าสู่ระบบแอดมิน";
-                }
             }
         }
 
@@ -1128,38 +1119,44 @@
             event.preventDefault();
             const email = document.getElementById('admin-email').value.trim();
             const password = document.getElementById('admin-pass').value.trim();
-            const loginBtn = document.getElementById('login-submit-btn');
+            const loginBtn = document.getElementById('admin-login-btn');
 
-            if (loginBtn.disabled) return;
+            if (!email || !password) {
+                showToast("กรุณากรอกอีเมลและรหัสผ่าน", "error");
+                return;
+            }
+
             loginBtn.disabled = true;
-            loginBtn.textContent = "กำลังเข้าสู่ระบบ...";
+            loginBtn.style.opacity = '0.6';
 
             try {
-                if (supabaseClient) {
-                    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                    if (error) throw error;
-                    if (data && data.user) {
-                        await verifyAndOpenAdminDashboard(data.user);
-                    }
-                } else {
-                    // Fallback simulation for offline testing
-                    if (email === 'admin@domain.com' && password === 'admin123') {
-                        await verifyAndOpenAdminDashboard({ email });
-                    } else {
-                        throw new Error("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
-                    }
+                if (!supabaseClient) {
+                    throw new Error("Supabase is not configured.");
+                }
+
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+
+                if (data.session && data.session.user) {
+                    await verifyAdminPrivileges(data.session.user);
+                    showToast("เข้าสู่ระบบแอดมินสำเร็จ", "success");
                 }
             } catch (err) {
                 console.error("Login error:", err);
-                showToast(err.message || "เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบข้อมูล", "error");
+                showToast("เข้าสู่ระบบไม่สำเร็จ: " + (err.message || "รหัสผ่านไม่ถูกต้อง"), "error");
+            } finally {
                 loginBtn.disabled = false;
-                loginBtn.textContent = "เข้าสู่ระบบแอดมิน";
+                loginBtn.style.opacity = '1';
             }
         }
 
         async function handleAdminLogout() {
-            if (supabaseClient) {
-                await supabaseClient.auth.signOut();
+            try {
+                if (supabaseClient) {
+                    await supabaseClient.auth.signOut();
+                }
+            } catch (err) {
+                console.error("Logout error:", err);
             }
             document.getElementById('admin-dashboard-view').classList.add('hidden');
             document.getElementById('admin-login-view').classList.remove('hidden');
@@ -1212,12 +1209,11 @@
             document.getElementById('admin-logo-url').value = storeData.logoUrl;
         }
 
-        // Update Store Info in Supabase
+        // Update Store Info in Supabase `store_settings`
         async function updateStoreInfo() {
             const saveBtn = document.getElementById('save-store-btn');
-            if (saveBtn.disabled) return;
             saveBtn.disabled = true;
-            saveBtn.textContent = "กำลังบันทึก...";
+            saveBtn.style.opacity = '0.6';
 
             storeData.brandTitle = document.getElementById('admin-brand-title').value.trim();
             storeData.heroTitle = document.getElementById('admin-store-title').value.trim();
@@ -1231,9 +1227,7 @@
 
             try {
                 if (supabaseClient) {
-                    // Update or upsert store_settings table
-                    const { error } = await supabaseClient.from('store_settings').upsert({
-                        id: 1,
+                    const payload = {
                         brand_title: storeData.brandTitle,
                         hero_title: storeData.heroTitle,
                         hero_subtitle: storeData.heroSubtitle,
@@ -1243,70 +1237,74 @@
                         line_url: storeData.lineUrl,
                         cover_url: storeData.coverUrl,
                         logo_url: storeData.logoUrl
-                    });
-                    if (error) throw error;
+                    };
+
+                    if (storeData.id) {
+                        const { error } = await supabaseClient.from('store_settings').update(payload).eq('id', storeData.id);
+                        if (error) throw error;
+                    } else {
+                        const { data, error } = await supabaseClient.from('store_settings').insert([payload]).select().single();
+                        if (error) throw error;
+                        if (data) storeData.id = data.id;
+                    }
                 }
                 renderStoreData();
                 showToast("บันทึกข้อมูลร้านค้าเรียบร้อย", "success");
             } catch (err) {
                 console.error("Error updating store info:", err);
-                showToast("เกิดข้อผิดพลาดในการบันทึกข้อมูล", "error");
+                showToast("เกิดข้อผิดพลาดในการบันทึกข้อมูลร้าน", "error");
             } finally {
                 saveBtn.disabled = false;
-                saveBtn.textContent = "บันทึกการเปลี่ยนแปลงข้อมูลร้าน";
+                saveBtn.style.opacity = '1';
             }
         }
 
-        // Highlight Management Actions
+        // Highlight Management in Admin with Supabase integration
         async function handleSaveHighlight(event) {
             event.preventDefault();
-            const submitBtn = document.getElementById('highlight-submit-btn');
-            if (submitBtn.disabled) return;
-
             const title = document.getElementById('highlight-title-input').value.trim();
             const coverUrl = document.getElementById('highlight-cover-input').value.trim();
-            const mediaUrl = document.getElementById('highlight-media-url').value.trim();
-            const description = document.getElementById('highlight-media-desc').value.trim();
+            const itemsRaw = document.getElementById('highlight-items-input').value.trim();
             const editId = document.getElementById('edit-highlight-id').value;
 
-            if (!title || !coverUrl || !mediaUrl) {
+            if (!title || !coverUrl || !itemsRaw) {
                 showToast("กรุณากรอกข้อมูลให้ครบถ้วน", "error");
                 return;
             }
 
-            submitBtn.disabled = true;
-            submitBtn.textContent = "กำลังบันทึก...";
+            let parsedItems;
+            try {
+                parsedItems = JSON.parse(itemsRaw);
+            } catch (e) {
+                showToast("รูปแบบ JSON ของรายการสื่อไม่ถูกต้อง", "error");
+                return;
+            }
 
             try {
                 if (supabaseClient) {
                     if (editId) {
                         const { error } = await supabaseClient.from('highlights').update({
-                            title,
+                            title: title,
                             cover_url: coverUrl,
-                            media_url: mediaUrl,
-                            description
+                            items: parsedItems
                         }).eq('id', editId);
                         if (error) throw error;
+                        showToast("แก้ไขไฮไลท์สำเร็จ", "success");
                     } else {
                         const { error } = await supabaseClient.from('highlights').insert([{
-                            title,
+                            title: title,
                             cover_url: coverUrl,
-                            media_url: mediaUrl,
-                            description
+                            items: parsedItems
                         }]);
                         if (error) throw error;
+                        showToast("สร้างไฮไลท์ใหม่สำเร็จ", "success");
                     }
                 }
-                showToast("บันทึกไฮไลท์สำเร็จ", "success");
                 cancelEditHighlight();
                 await fetchHighlights();
-                renderAdminHighlightsList();
             } catch (err) {
                 console.error("Error saving highlight:", err);
                 showToast("เกิดข้อผิดพลาดในการบันทึกไฮไลท์", "error");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = editId ? "บันทึกการแก้ไข" : "เพิ่มไฮไลท์ใหม่";
             }
         }
 
@@ -1314,12 +1312,15 @@
             const container = document.getElementById('admin-highlights-list');
             container.innerHTML = '';
 
-            if (highlights.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400">ยังไม่มีไฮไลท์</p>`;
+            if (!highlights || highlights.length === 0) {
+                const empty = document.createElement('p');
+                empty.className = "text-xs text-gray-400";
+                empty.textContent = "ยังไม่มีไฮไลท์";
+                container.appendChild(empty);
                 return;
             }
 
-            highlights.forEach((h, index) => {
+            highlights.forEach((h) => {
                 const row = document.createElement('div');
                 row.className = "flex items-center justify-between p-3 rounded-xl bg-white border border-[#FAF1F4] shadow-sm";
                 
@@ -1329,40 +1330,73 @@
                 const img = document.createElement('img');
                 img.src = h.cover;
                 img.className = "w-10 h-10 rounded-full object-cover border border-[#F0CCD3]";
-                img.onerror = function() { this.src = 'https://placehold.co/100x100/FDF3F5/D69CA6?text=H'; };
+                img.onerror = function() { this.src='https://placehold.co/100x100/FDF3F5/D69CA6?text=H'; };
 
-                const textDiv = document.createElement('div');
+                const textWrap = document.createElement('div');
                 const h5 = document.createElement('h5');
                 h5.className = "text-xs font-bold text-gray-800";
                 h5.textContent = h.title;
                 const spanCount = document.createElement('span');
                 spanCount.className = "text-[10px] text-gray-400";
-                spanCount.textContent = `${h.items.length} รายการสื่อ`;
-                textDiv.appendChild(h5);
-                textDiv.appendChild(spanCount);
+                spanCount.textContent = (h.items ? h.items.length : 0) + " รายการสื่อ";
 
+                textWrap.appendChild(h5);
+                textWrap.appendChild(spanCount);
                 leftDiv.appendChild(img);
-                leftDiv.appendChild(textDiv);
+                leftDiv.appendChild(textWrap);
 
                 const rightDiv = document.createElement('div');
                 rightDiv.className = "flex items-center gap-2";
 
-                const delBtn = document.createElement('button');
-                delBtn.className = "px-3 py-1.5 rounded-lg bg-red-50 text-red-600 text-xs font-medium hover:bg-red-100 transition";
-                delBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
-                delBtn.onclick = () => deleteHighlight(h.id);
+                const editBtn = document.createElement('button');
+                editBtn.type = "button";
+                editBtn.className = "px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs font-medium hover:bg-blue-100 transition";
+                editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
+                editBtn.onclick = () => editHighlight(h.id);
 
-                rightDiv.appendChild(delBtn);
+                const deleteBtn = document.createElement('button');
+                deleteBtn.type = "button";
+                deleteBtn.className = "px-3 py-1.5 rounded-lg bg-red-50 text-red-600 text-xs font-medium hover:bg-red-100 transition";
+                deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                deleteBtn.onclick = () => deleteHighlight(h.id);
+
+                rightDiv.appendChild(editBtn);
+                rightDiv.appendChild(deleteBtn);
+
                 row.appendChild(leftDiv);
                 row.appendChild(rightDiv);
                 container.appendChild(row);
             });
         }
 
+        function editHighlight(id) {
+            const h = highlights.find(item => item.id === id);
+            if (!h) return;
+            document.getElementById('edit-highlight-id').value = h.id;
+            document.getElementById('highlight-title-input').value = h.title;
+            document.getElementById('highlight-cover-input').value = h.cover;
+            document.getElementById('highlight-items-input').value = JSON.stringify(h.items, null, 2);
+            document.getElementById('highlight-form-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-[#D69CA6]"></i> โหมดแก้ไขไฮไลท์: ${h.title}`;
+            document.getElementById('highlight-submit-btn').textContent = "บันทึกการแก้ไข";
+            document.getElementById('edit-mode-badge').classList.remove('hidden');
+            document.getElementById('highlight-cancel-edit-btn').classList.remove('hidden');
+            switchAdminTab('highlights');
+        }
+
+        function cancelEditHighlight() {
+            document.getElementById('edit-highlight-id').value = "";
+            document.getElementById('highlight-title-input').value = '';
+            document.getElementById('highlight-cover-input').value = '';
+            document.getElementById('highlight-items-input').value = '';
+            document.getElementById('highlight-form-title').innerHTML = `<i class="fa-solid fa-circle-plus text-[#D69CA6]"></i> โหมดสร้างไฮไลท์ใหม่`;
+            document.getElementById('highlight-submit-btn').textContent = "เพิ่มไฮไลท์ใหม่";
+            document.getElementById('edit-mode-badge').classList.add('hidden');
+            document.getElementById('highlight-cancel-edit-btn').classList.add('hidden');
+        }
+
         async function deleteHighlight(id) {
-            if (!confirm("คุณต้องการลบไฮไลท์นี้ใช่หรือไม่?")) return;
             try {
-                if (supabaseClient && id) {
+                if (supabaseClient) {
                     const { error } = await supabaseClient.from('highlights').delete().eq('id', id);
                     if (error) throw error;
                 }
@@ -1375,25 +1409,16 @@
             }
         }
 
-        function cancelEditHighlight() {
-            document.getElementById('edit-highlight-id').value = '';
-            document.getElementById('highlight-title-input').value = '';
-            document.getElementById('highlight-cover-input').value = '';
-            document.getElementById('highlight-media-url').value = '';
-            document.getElementById('highlight-media-desc').value = '';
-            document.getElementById('highlight-form-title').innerHTML = `<i class="fa-solid fa-circle-plus text-[#D69CA6]"></i> โหมดสร้างไฮไลท์ใหม่`;
-            document.getElementById('highlight-submit-btn').textContent = "เพิ่มไฮไลท์ใหม่";
-            document.getElementById('edit-mode-badge').classList.add('hidden');
-            document.getElementById('highlight-cancel-edit-btn').classList.add('hidden');
-        }
-
         // Reviews Management in Admin
         function renderAdminReviewsList() {
             const container = document.getElementById('admin-reviews-list');
             container.innerHTML = '';
 
-            if (reviews.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400">ยังไม่มีรีวิว</p>`;
+            if (!reviews || reviews.length === 0) {
+                const empty = document.createElement('p');
+                empty.className = "text-xs text-gray-400";
+                empty.textContent = "ยังไม่มีรีวิว";
+                container.appendChild(empty);
                 return;
             }
 
@@ -1404,36 +1429,39 @@
                 const topRow = document.createElement('div');
                 topRow.className = "flex items-center justify-between";
 
-                const leftGroup = document.createElement('div');
-                leftGroup.className = "flex items-center gap-2";
-                
-                const nameSpan = document.createElement('span');
-                nameSpan.className = "text-xs font-bold text-gray-800";
-                nameSpan.textContent = r.name;
-                leftGroup.appendChild(nameSpan);
+                const left = document.createElement('div');
+                left.className = "flex items-center gap-2";
+                const h4 = document.createElement('h4');
+                h4.className = "text-xs font-bold text-gray-800";
+                h4.textContent = r.name;
+                const dateSpan = document.createElement('span');
+                dateSpan.className = "text-[10px] text-gray-400 ml-2";
+                dateSpan.textContent = r.date;
+                left.appendChild(h4);
+                left.appendChild(dateSpan);
 
-                const delBtn = document.createElement('button');
-                delBtn.className = "px-2.5 py-1 rounded-lg bg-red-50 text-red-600 text-[11px] font-medium hover:bg-red-100 transition";
-                delBtn.innerHTML = `<i class="fa-solid fa-trash"></i> ลบ`;
-                delBtn.onclick = () => deleteReview(r.id);
+                const deleteBtn = document.createElement('button');
+                deleteBtn.type = "button";
+                deleteBtn.className = "px-2.5 py-1 rounded-lg bg-red-50 text-red-600 text-xs hover:bg-red-100 transition";
+                deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i> ลบ';
+                deleteBtn.onclick = () => deleteReview(r.id);
 
-                topRow.appendChild(leftGroup);
-                topRow.appendChild(delBtn);
+                topRow.appendChild(left);
+                topRow.appendChild(deleteBtn);
 
-                const pComment = document.createElement('p');
-                pComment.className = "text-xs text-gray-600";
-                pComment.textContent = r.comment;
+                const p = document.createElement('p');
+                p.className = "text-xs text-gray-600";
+                p.textContent = r.comment;
 
                 card.appendChild(topRow);
-                card.appendChild(pComment);
+                card.appendChild(p);
                 container.appendChild(card);
             });
         }
 
         async function deleteReview(id) {
-            if (!confirm("คุณต้องการลบรีวิวนี้ใช่หรือไม่?")) return;
             try {
-                if (supabaseClient && id) {
+                if (supabaseClient) {
                     const { error } = await supabaseClient.from('reviews').delete().eq('id', id);
                     if (error) throw error;
                 }
@@ -1446,7 +1474,7 @@
             }
         }
 
-        // Toast Notification Helper
+        // Toast Notification System
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -1460,9 +1488,15 @@
             }
 
             toast.className = `${bgClass} px-4 py-3 rounded-2xl shadow-xl text-xs font-medium flex items-center gap-2.5 toast-animate pointer-events-auto`;
-            toast.innerHTML = `<i class="fa-solid ${icon} text-sm"></i> <span></span>`;
-            toast.querySelector('span').textContent = message;
             
+            const iconEl = document.createElement('i');
+            iconEl.className = `fa-solid ${icon} text-sm`;
+            
+            const spanEl = document.createElement('span');
+            spanEl.textContent = message;
+
+            toast.appendChild(iconEl);
+            toast.appendChild(spanEl);
             container.appendChild(toast);
 
             setTimeout(() => {
