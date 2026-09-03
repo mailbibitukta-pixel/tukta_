@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Princess Credit - ร้านรับเติมเครดิต</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Allura&family=Dancing+Script:wght@500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #FDF9FA;
+            color: #5C4A4D;
+        }
+        
+        .brand-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .gate-brand-font {
+            font-family: 'Allura', cursive;
+            letter-spacing: 0.05em;
+        }
+
+        .bg-pippin { background-color: #FDF3F5; }
+        .bg-lavender-blush { background-color: #FEF7F9; }
+        .bg-chardon { background-color: #FAF1F4; }
+        .bg-chablis { background-color: #FCF4F6; }
+        .bg-rose-white { background-color: #FDF9FA; }
+        
+        .text-rose-gold { color: #D69CA6; }
+        .border-rose-gold { border-color: #F0CCD3; }
+        .bg-rose-gold { background-color: #F0CCD3; }
+        
+        .btn-soft-pink {
+            background: linear-gradient(135deg, #F8E3E7 0%, #F0CCD3 100%);
+            color: #5C4A4D;
+            transition: all 0.3s ease;
+        }
+        .btn-soft-pink:hover {
+            background: linear-gradient(135deg, #F0CCD3 0%, #E8B4BC 100%);
+            opacity: 0.95;
+        }
+
+        .btn-pastel-logout {
+            background: linear-gradient(135deg, #FCE7EC 0%, #F4D1DA 100%);
+            color: #7D525A;
+            transition: all 0.3s ease;
+        }
+        .btn-pastel-logout:hover {
+            background: linear-gradient(135deg, #F4D1DA 100%, #E8B4BC 100%);
+        }
+        
+        ::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF1F4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #F0CCD3;
+            border-radius: 3px;
+        }
+
+        #gate-container {
+            transition: opacity 1s ease-in-out;
+        }
+        .gate-open-left {
+            transform: perspective(1200px) rotateY(-110deg);
+            transform-origin: left;
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .gate-open-right {
+            transform: perspective(1200px) rotateY(110deg);
+            transform-origin: right;
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        @keyframes slideInToast {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .toast-animate {
+            animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-rose-white min-h-screen relative overflow-x-hidden">
+
+    <div id="gate-container" class="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF1F4] overflow-hidden cursor-pointer" onclick="openGate()">
+        <div class="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920');"></div>
+        
+        <div class="relative w-full h-full flex shadow-2xl bg-[#FDF9FA]">
+            <div id="left-gate" class="w-1/2 h-full bg-gradient-to-r from-[#FDF3F5] via-[#FEF7F9] to-[#FCF4F6] border-r border-[#E8B4BC] flex flex-col justify-center items-end relative shadow-inner origin-left">
+                <div class="absolute top-8 bottom-8 right-3 w-[90%] border-2 border-[#E8B4BC] rounded-[36px] bg-white/20 backdrop-blur-[0.5px] pointer-events-none shadow-sm"></div>
+            </div>
+
+            <div id="right-gate" class="w-1/2 h-full bg-gradient-to-l from-[#FDF3F5] via-[#FEF7F9] to-[#FCF4F6] border-l border-[#E8B4BC] flex flex-col justify-center items-start relative shadow-inner origin-right">
+                <div class="absolute top-8 bottom-8 left-3 w-[90%] border-2 border-[#E8B4BC] rounded-[36px] bg-white/20 backdrop-blur-[0.5px] pointer-events-none shadow-sm"></div>
+            </div>
+
+            <div id="gate-content" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-10 text-center select-none pointer-events-auto">
+                <div class="flex flex-col items-center group cursor-pointer" title="คลิกเพื่อเปิดประตู">
+                    <div class="mb-4">
+                        <div class="flex items-center justify-center gap-2 md:gap-3">
+                            <svg class="w-7 h-7 md:w-9 md:h-9 text-[#7D525A] overflow-visible" viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M 95 25 C 75 25, 60 5, 45 25 C 35 38, 20 40, 10 25 C 5 18, 12 10, 18 16 C 25 22, 22 35, 12 35" />
+                                <path d="M 28 27 C 24 22, 17 23, 14 27 C 11 31, 16 36, 21 34 Z" fill="currentColor" stroke="none" />
+                            </svg>
+                            <h2 class="gate-brand-font text-2xl md:text-4xl text-[#7D525A] tracking-normal drop-shadow-sm font-normal">natthakrita.tukta</h2>
+                            <svg class="w-7 h-7 md:w-9 md:h-9 text-[#7D525A] overflow-visible scale-x-[-1]" viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M 95 25 C 75 25, 60 5, 45 25 C 35 38, 20 40, 10 25 C 5 18, 12 10, 18 16 C 25 22, 22 35, 12 35" />
+                                <path d="M 28 27 C 24 22, 17 23, 14 27 C 11 31, 16 36, 21 34 Z" fill="currentColor" stroke="none" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 inline-block bg-white/95 px-5 py-2 rounded-2xl shadow-sm border border-[#F0CCD3]">
+                            <p class="text-[11px] tracking-[0.2em] text-[#D69CA6] uppercase font-medium">hihi welcome to tukta shop</p>
+                        </div>
+                    </div>
+                    <div id="crown-icon-wrapper" class="w-16 h-16 rounded-full bg-white/95 border-2 border-[#F0CCD3] shadow-md flex items-center justify-center text-[#D69CA6] text-2xl transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg">
+                        <i id="crown-symbol" class="fa-solid fa-crown drop-shadow-sm text-[#D69CA6]"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 pointer-events-none">
+        
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-[#FAF1F4] shadow-sm">
+            <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="text-[#D69CA6] text-2xl font-bold tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-crown text-[#D69CA6] text-lg"></i> 
+                        <span id="nav-brand-title" class="brand-font font-normal tracking-wide text-3xl">Princess Credit</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-600">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="hover:text-[#D69CA6] transition">หน้าแรก</a>
+                    <a href="#highlight" onclick="document.getElementById('highlight').scrollIntoView({behavior: 'smooth'}); return false;" class="hover:text-[#D69CA6] transition">HIGHLIGHT</a>
+                    <a href="#write-review" onclick="document.getElementById('write-review').scrollIntoView({behavior: 'smooth'}); return false;" class="hover:text-[#D69CA6] transition">เขียนรีวิว</a>
+                    <a href="#reviews" onclick="document.getElementById('reviews').scrollIntoView({behavior: 'smooth'}); return false;" class="hover:text-[#D69CA6] transition">รีวิวจากลูกค้า</a>
+                </nav>
+                <div class="flex items-center space-x-3">
+                    <button onclick="openAuthModal()" class="btn-soft-pink px-4 py-2 rounded-full text-sm font-medium shadow-md flex items-center gap-2">
+                        <i class="fa-solid fa-gears"></i> เข้าสู่ระบบแอดมิน
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="max-w-5xl mx-auto px-4 pt-6">
+            <div class="relative rounded-3xl overflow-hidden shadow-xl bg-[#FEF7F9] border-4 border-white">
+                <div id="display-cover" class="h-64 md:h-80 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200');">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#FAF1F4]/80 via-transparent to-transparent"></div>
+                </div>
+
+                <div class="px-6 py-5 relative flex flex-col md:flex-row items-center md:items-center justify-between gap-4">
+                    <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+                        <div class="w-28 h-28 md:w-32 md:h-32 rounded-full p-1.5 bg-white shadow-xl relative group -mt-16 md:-mt-16 flex-shrink-0">
+                            <div id="display-logo-container" class="w-full h-full rounded-full bg-gradient-to-br from-[#FDF3F5] to-[#F0CCD3] flex items-center justify-center overflow-hidden border-2 border-[#D69CA6] bg-cover bg-center">
+                                <i id="display-logo-icon" class="fa-solid fa-crown text-white text-5xl drop-shadow-md"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 id="display-hero-title" class="text-3xl md:text-4xl font-normal text-gray-800 flex items-center justify-center md:justify-start gap-2 brand-font">
+                                Princess Credit
+                            </h1>
+                            <p id="display-hero-subtitle" class="text-sm text-gray-600 mt-1 font-light">ร้านรับเติมเครดิต ราคาถูก ปลอดภัย 100%</p>
+                            
+                            <div id="display-info-badges" class="flex flex-col items-center md:items-start gap-1 mt-2 text-xs text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-[#D69CA6]"></i> เปิดบริการทุกวัน 10:00 - 22:00 น.</span>
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-bolt text-[#D69CA6]"></i> ตอบกลับเร็ว ภายใน 5 นาที</span>
+                            </div>
+
+                            <div id="display-social-links" class="flex items-center justify-center md:justify-start gap-3 mt-2.5">
+                                <a id="display-facebook-link" href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-[#FDF3F5] border border-[#F0CCD3] text-[#D69CA6] flex items-center justify-center shadow-sm hover:scale-110 hover:bg-[#F0CCD3] hover:text-white transition" title="Facebook">
+                                    <i class="fa-brands fa-facebook-f text-xs"></i>
+                                </a>
+                                <a id="display-line-link" href="https://line.me" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-[#FDF3F5] border border-[#F0CCD3] text-[#D69CA6] flex items-center justify-center shadow-sm hover:scale-110 hover:bg-[#F0CCD3] hover:text-white transition" title="LINE">
+                                    <i class="fa-brands fa-line text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 w-full md:w-auto justify-center">
+                        <div class="text-center px-4 py-2 bg-white/80 backdrop-blur rounded-2xl shadow-sm border border-[#FAF1F4]">
+                            <div class="flex items-center justify-center text-[#D69CA6] gap-1 text-base font-bold">
+                                <i class="fa-solid fa-star"></i> <span id="display-avg-rating">4.9</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500">(<span id="display-total-reviews-count">3</span> รีวิว)</span>
+                        </div>
+                        <div class="bg-white px-5 py-3 rounded-2xl shadow-md border border-[#FAF1F4] text-center">
+                            <span class="text-[10px] font-semibold text-[#D69CA6] uppercase tracking-wider block mb-0.5">
+                                <i class="fa-solid fa-crown text-[#D69CA6]"></i> ยอดรวมรีวิว
+                            </span>
+                            <span id="display-balance" class="text-xl font-bold text-[#D69CA6]">3</span>
+                            <span class="text-[10px] text-gray-400 block">REVIEWS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-5xl mx-auto px-4 mt-8" id="highlight">
+            <div class="text-center mb-4 flex items-center justify-center gap-3">
+                <h3 class="text-lg font-bold text-[#D69CA6] tracking-widest inline-flex items-center gap-2">
+                    <span class="h-px w-8 bg-[#F0CCD3]"></span>
+                    HIGHLIGHT
+                    <span class="h-px w-8 bg-[#F0CCD3]"></span>
+                </h3>
+            </div>
+            <div id="highlight-container" class="flex items-center gap-4 overflow-x-auto pb-4 pt-1 px-2 scrollbar-none justify-start md:justify-center">
+                <!-- Dynamically rendered highlight stories -->
+            </div>
+        </section>
+
+        <section class="max-w-5xl mx-auto px-4 mt-8" id="write-review">
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-[#FAF1F4]">
+                <h3 class="text-lg font-bold text-[#D69CA6] text-center mb-6">เขียนรีวิว</h3>
+                <form id="review-form" onsubmit="submitReview(event)" class="space-y-4">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#FDF9FA] p-4 rounded-2xl border border-[#FAF1F4]">
+                        <span class="text-sm font-medium text-gray-700">ให้คะแนนบริการ</span>
+                        <div class="flex items-center gap-2 text-2xl text-[#D69CA6] cursor-pointer" id="star-rating">
+                            <i class="fa-solid fa-star hover:scale-110 transition" data-rating="1" onclick="setRating(1)"></i>
+                            <i class="fa-solid fa-star hover:scale-110 transition" data-rating="2" onclick="setRating(2)"></i>
+                            <i class="fa-solid fa-star hover:scale-110 transition" data-rating="3" onclick="setRating(3)"></i>
+                            <i class="fa-solid fa-star hover:scale-110 transition" data-rating="4" onclick="setRating(4)"></i>
+                            <i class="fa-solid fa-star hover:scale-110 transition" data-rating="5" onclick="setRating(5)"></i>
+                            <span id="rating-text" class="text-xs font-bold text-gray-500 ml-2">5/5</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="text" id="reviewer-name" placeholder="ชื่อแอคลูกค้าที่มาใช้บริการ หรือ นามแฝง" required class="w-full p-3 rounded-2xl border border-[#F0CCD3] focus:outline-none focus:ring-2 focus:ring-[#D69CA6] bg-[#FDF9FA] text-sm">
+                    </div>
+
+                    <div>
+                        <textarea id="review-comment" required rows="2" placeholder="เขียนรีวิว…" class="w-full p-4 rounded-2xl border border-[#F0CCD3] focus:outline-none focus:ring-2 focus:ring-[#D69CA6] bg-[#FDF9FA] text-sm resize-y min-h-[70px] max-h-[150px]"></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-2 px-1">
+                        <input type="checkbox" id="verify-real-review" required class="w-4 h-4 rounded border-[#F0CCD3] text-[#D69CA6] focus:ring-[#D69CA6] accent-[#D69CA6] cursor-pointer">
+                        <label for="verify-real-review" class="text-xs text-gray-600 cursor-pointer select-none">ยืนยันว่ารีวิวนี้คือรีวิวจริง 100%</label>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="btn-soft-pink px-6 py-3 rounded-2xl text-sm font-semibold shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-crown"></i> ส่งรีวิว
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="max-w-5xl mx-auto px-4 mt-8 mb-12" id="reviews">
+            <div class="text-center mb-6">
+                <h3 class="text-lg font-bold text-[#D69CA6] tracking-widest inline-flex items-center gap-2">
+                    <span class="h-px w-8 bg-[#F0CCD3]"></span>
+                    รีวิวจากลูกค้า
+                    <span class="h-px w-8 bg-[#F0CCD3]"></span>
+                </h3>
+            </div>
+
+            <div id="reviews-container" class="space-y-4">
+                <!-- Populated dynamically -->
+            </div>
+        </section>
+
+        <footer class="bg-transparent py-8" id="contact">
+            <div class="max-w-5xl mx-auto px-4 h-8">
+            </div>
+        </footer>
+
+    </div>
+
+    <div id="story-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex flex-col items-center justify-center p-2 md:p-4">
+        <div class="relative max-w-lg w-full h-[85vh] bg-black rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between">
+            <div id="story-progress-container" class="absolute top-3 left-3 right-3 z-30 flex gap-1.5"></div>
+
+            <div class="absolute top-6 left-4 right-4 z-30 flex items-center justify-between text-white">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#F0CCD3] to-[#D69CA6] p-0.5">
+                        <div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[#D69CA6] text-xs font-bold">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 id="story-modal-category" class="text-xs font-bold drop-shadow">Princess Credit</h4>
+                        <span id="story-modal-timestamp" class="text-[10px] text-gray-300">เมื่อสักครู่</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="closeStory()" class="w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden cursor-pointer" onclick="nextStoryItem()">
+                <div id="story-media-wrapper" class="w-full h-full flex items-center justify-center"></div>
+                <div class="absolute inset-y-0 left-0 w-1/3 z-20" onclick="event.stopPropagation(); prevStoryItem();"></div>
+                <div class="absolute inset-y-0 right-0 w-1/3 z-20" onclick="event.stopPropagation(); nextStoryItem();"></div>
+            </div>
+
+            <div class="absolute bottom-4 left-4 right-4 z-30 bg-black/40 backdrop-blur-md p-3 rounded-2xl text-white text-xs text-center">
+                <p id="story-modal-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative border-2 border-[#FAF1F4] max-h-[90vh] overflow-y-auto">
+            <button id="auth-modal-close-btn" onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <!-- Admin Login View -->
+            <div id="admin-login-view" class="block">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 rounded-full bg-[#FEF7F9] text-[#D69CA6] text-2xl mx-auto flex items-center justify-center mb-2 shadow-inner">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">เข้าสู่ระบบแอดมิน Princess Credit</h3>
+                    <p class="text-xs text-gray-500 mt-1">กรอกรหัสผ่านผู้ดูแลระบบ (ตั้งค่าเริ่มต้น: admin123)</p>
+                </div>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4 max-w-md mx-auto">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">ยูสเซอร์เนมแอดมิน</label>
+                        <input type="text" id="admin-user" required value="admin" class="w-full p-3 rounded-2xl border border-[#F0CCD3] bg-[#FDF9FA] text-sm focus:outline-none focus:ring-2 focus:ring-[#D69CA6]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">รหัสผ่านแอดมิน</label>
+                        <input type="password" id="admin-pass" required placeholder="••••••••" class="w-full p-3 rounded-2xl border border-[#F0CCD3] bg-[#FDF9FA] text-sm focus:outline-none focus:ring-2 focus:ring-[#D69CA6]">
+                    </div>
+                    <button type="submit" class="w-full btn-soft-pink py-3 rounded-2xl font-semibold text-sm shadow-md transition">
+                        เข้าสู่ระบบแอดมิน
+                    </button>
+                </form>
+            </div>
+
+            <!-- Admin Dashboard View -->
+            <div id="admin-dashboard-view" class="hidden">
+                <div class="flex items-center justify-between mb-5 border-b border-gray-100 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-[#FEF7F9] text-[#D69CA6] border border-[#F0CCD3] flex items-center justify-center text-xl shadow-inner">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">ระบบหลังบ้านแอดมิน</h3>
+                            <p class="text-xs text-gray-500">จัดการข้อมูลร้าน, ไฮไลท์ และรีวิว</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button onclick="handleAdminLogout()" class="btn-pastel-logout px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center gap-1.5 transition shadow-sm">
+                            <i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Clean Admin Tabs Navigation -->
+                <div class="flex rounded-2xl bg-[#FAF1F4] p-1.5 mb-5 gap-2">
+                    <button onclick="switchAdminTab('store')" id="tab-btn-store" class="flex-1 py-2.5 rounded-xl font-semibold text-xs transition bg-white text-[#5C4A4D] shadow-sm flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-store text-[#D69CA6]"></i> ข้อมูลร้าน
+                    </button>
+                    <button onclick="switchAdminTab('highlights')" id="tab-btn-highlights" class="flex-1 py-2.5 rounded-xl font-semibold text-xs transition text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-photo-film text-[#D69CA6]"></i> จัดการไฮไลท์
+                    </button>
+                    <button onclick="switchAdminTab('reviews')" id="tab-btn-reviews" class="flex-1 py-2.5 rounded-xl font-semibold text-xs transition text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-comments text-[#D69CA6]"></i> จัดการรีวิว
+                    </button>
+                </div>
+
+                <!-- Tab 1: Store Settings -->
+                <div id="admin-tab-store" class="space-y-4">
+                    <div class="bg-[#FDF9FA] p-4 rounded-2xl border border-[#FAF1F4] space-y-3">
+                        <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-pen text-[#D69CA6]"></i> ตั้งค่าข้อความร้านค้า
+                        </h4>
+                        <div>
+                            <label class="block text-[11px] font-medium text-gray-600 mb-1">ชื่อร้าน / หัวมุมบนซ้าย (Brand Title)</label>
+                            <input type="text" id="admin-brand-title" value="Princess Credit" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-medium text-gray-600 mb-1">ชื่อหัวข้อหลัก (Hero Title)</label>
+                            <input type="text" id="admin-store-title" value="Princess Credit" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-medium text-gray-600 mb-1">คำอธิบายร้าน (Sub-headline)</label>
+                            <input type="text" id="admin-store-subtitle" value="ร้านรับเติมเครดิต ราคาถูก ปลอดภัย 100%" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">เวลาทำการ</label>
+                                <input type="text" id="admin-store-hours" value="เปิดบริการทุกวัน 10:00 - 22:00 น." class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">ความเร็วในการตอบกลับ</label>
+                                <input type="text" id="admin-store-response" value="ตอบกลับเร็ว ภายใน 5 นาที" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">ลิงก์ Facebook URL</label>
+                                <input type="text" id="admin-facebook-url" value="https://facebook.com" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">ลิงก์ LINE URL</label>
+                                <input type="text" id="admin-line-url" value="https://line.me" class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#FDF9FA] p-4 rounded-2xl border border-[#FAF1F4] space-y-3">
+                        <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-image text-[#D69CA6]"></i> อัปโหลดรูปปก & โลโก้
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">เลือกไฟล์รูปปก (Cover)</label>
+                                <input type="file" id="admin-cover-file" accept="image/*" onchange="previewCoverImage(event)" class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#F0CCD3] file:text-[#5C4A4D] hover:file:opacity-80">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">เลือกไฟล์โลโก้ร้าน (Logo)</label>
+                                <input type="file" id="admin-logo-file" accept="image/*" onchange="previewLogoImage(event)" class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#F0CCD3] file:text-[#5C4A4D] hover:file:opacity-80">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="updateStoreInfo()" class="btn-soft-pink w-full py-3 rounded-2xl text-sm font-semibold shadow-md">
+                        บันทึกการเปลี่ยนแปลงข้อมูลร้าน
+                    </button>
+                </div>
+
+                <!-- Tab 2: Highlight Management -->
+                <div id="admin-tab-highlights" class="hidden space-y-4">
+                    <div class="bg-[#FDF9FA] p-4 rounded-2xl border border-[#FAF1F4] space-y-3">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                            <h4 id="highlight-form-title" class="text-xs font-bold text-gray-700 uppercase tracking-wide flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-plus text-[#D69CA6]"></i> โหมดสร้างไฮไลท์ใหม่
+                            </h4>
+                            <span id="edit-mode-badge" class="hidden text-[10px] bg-blue-100 text-blue-600 px-2.5 py-0.5 rounded-full font-bold">กำลังโหมดแก้ไข</span>
+                        </div>
+
+                        <form onsubmit="handleSaveHighlight(event)" class="space-y-3">
+                            <input type="hidden" id="edit-highlight-index" value="-1">
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">หัวข้อไฮไลท์</label>
+                                <input type="text" id="highlight-title-input" placeholder="เช่น รีวิวลูกค้า, โปรโมชั่น, บริการ..." required class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">เลือกไฟล์สื่อ (รูปภาพ/วิดีโอ เลือกหลายไฟล์พร้อมกันได้)</label>
+                                <input type="file" id="highlight-files-input" accept="image/*,video/*" multiple onchange="handleFileSelection(event)" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#F0CCD3] file:text-[#5C4A4D]">
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="block text-[11px] font-medium text-gray-600">ไฟล์สื่อทั้งหมดในไฮไลท์นี้ (<span id="preview-count">0</span> ไฟล์)</label>
+                                <div id="staged-media-preview-container" class="grid grid-cols-3 gap-2 p-2 bg-white rounded-xl border border-[#F0CCD3] min-h-[90px] max-h-48 overflow-y-auto items-center">
+                                    <div class="col-span-3 text-center text-xs text-gray-400 py-3">ยังไม่มีไฟล์สื่อที่เลือก</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-600 mb-1">คำบรรยาย (Caption)</label>
+                                <input type="text" id="highlight-caption-input" placeholder="คำบรรยายสั้นๆ..." class="w-full p-2.5 rounded-xl border border-[#F0CCD3] text-sm bg-white focus:outline-none">
+                            </div>
+
+                            <div class="flex gap-2 pt-1">
+                                <button type="submit" id="highlight-submit-btn" class="btn-soft-pink flex-1 py-2.5 rounded-xl font-semibold text-xs shadow-sm">
+                                    บันทึกสร้างไฮไลท์ใหม่
+                                </button>
+                                <button type="button" id="highlight-cancel-btn" onclick="resetHighlightForm()" class="hidden bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-xl font-semibold text-xs transition">
+                                    ยกเลิกโหมดแก้ไข
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="bg-[#FDF9FA] p-4 rounded-2xl border border-[#FAF1F4]">
+                        <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-list text-[#D69CA6]"></i> รายการไฮไลท์ทั้งหมด (เลือกแก้ไขหรือลบ)
+                        </h4>
+                        <div id="admin-highlights-list" class="space-y-2.5 max-h-56 overflow-y-auto">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Reviews Management -->
+                <div id="admin-tab-reviews" class="hidden space-y-4">
+                    <div class="bg-[#FDF9FA] p-4 rounded-2xl border border-[#FAF1F4]">
+                        <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-comments text-[#D69CA6]"></i> จัดการรีวิวทั้งหมดจากลูกค้า
+                        </h4>
+                        <div id="admin-reviews-list" class="space-y-2.5 max-h-72 overflow-y-auto">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="msg-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center border-2 border-[#FAF1F4]">
+            <div class="w-14 h-14 rounded-full bg-[#FEF7F9] text-[#D69CA6] text-2xl mx-auto flex items-center justify-center mb-3 shadow-inner">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+            <h4 id="msg-modal-title" class="text-base font-bold text-gray-800 mb-2">Princess Credit</h4>
+            <p id="msg-modal-text" class="text-sm text-gray-600 mb-6"></p>
+            <button onclick="closeMsgModal()" class="w-full btn-soft-pink py-2.5 rounded-2xl font-semibold text-sm shadow">ตกลง</button>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
+
+    <script>
+        let currentRating = 5;
+        let isAdminLoggedIn = false;
+        let storeInfoData = {
+            title: "Princess Credit",
+            brandTitle: "Princess Credit",
+            subtitle: "ร้านรับเติมเครดิต ราคาถูก ปลอดภัย 100%",
+            hours: "เปิดบริการทุกวัน 10:00 - 22:00 น.",
+            response: "ตอบกลับเร็ว ภายใน 5 นาที",
+            facebook: "https://facebook.com",
+            line: "https://line.me"
+        };
+
+        let reviewsData = [
+            { name: "คุณเจ้าหญิง A", rating: 5, comment: "บริการดีมากค่ะ เติมไว ไม่ต้องรอนาน แนะนำเลยค่าา 💖", date: "24 ส.ค. 2567 14:30" },
+            { name: "คุณเจ้าหญิง B", rating: 5, comment: "ร้านนี้น่ารักมากกก ตอบแชทไว ใจดีสุดๆ ไว้มาอุดหนุนอีกแน่นอนค่ะ 👑", date: "23 ส.ค. 2567 20:15" },
+            { name: "คุณเจ้าหญิง C", rating: 5, comment: "เครดิตเข้าไวมากจริงๆ ค่ะ ประทับใจมากค่ะ 💕", date: "22 ส.ค. 2567 18:45" }
+        ];
+
+        let highlightsData = [
+            {
+                title: "รีวิวลูกค้า",
+                icon: "fa-comments",
+                items: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600", caption: "รีวิวความพึงพอใจจากลูกค้าจริง" }
+                ]
+            },
+            {
+                title: "โปรโมชั่น",
+                icon: "fa-gift",
+                items: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=600", caption: "โปรโมชั่นสุดคุ้มประจำเดือน" }
+                ]
+            }
+        ];
+
+        let activeStoryGroupIndex = null;
+        let activeStoryGroup = null;
+        let activeStoryIndex = 0;
+        let storyTimer = null;
+        let stagedHighlightItems = [];
+
+        function spawnParticleStar(x, y) {
+            const star = document.createElement('div');
+            star.innerHTML = '<i class="fa-solid fa-star"></i>';
+            star.style.position = 'fixed';
+            star.style.left = x + 'px';
+            star.style.top = y + 'px';
+            star.style.color = '#F8B4CB';
+            star.style.fontSize = (Math.random() * 10 + 10) + 'px';
+            star.style.pointerEvents = 'none';
+            star.style.zIndex = '99999';
+            star.style.transition = 'all 0.8s ease-out';
+            star.style.opacity = '0.9';
+            document.body.appendChild(star);
+
+            const destinationX = x + (Math.random() * 60 - 30);
+            const destinationY = y - (Math.random() * 60 + 20);
+
+            setTimeout(() => {
+                star.style.transform = `translate(${destinationX - x}px, ${destinationY - y}px) scale(0.3) rotate(${Math.random() * 180}deg)`;
+                star.style.opacity = '0';
+            }, 20);
+
+            setTimeout(() => {
+                star.remove();
+            }, 850);
+        }
+
+        window.addEventListener('click', (e) => {
+            spawnParticleStar(e.clientX, e.clientY);
+        });
+
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            if (Math.abs(window.scrollY - lastScrollY) > 50) {
+                lastScrollY = window.scrollY;
+                const randomX = Math.random() * window.innerWidth;
+                const randomY = Math.random() * window.innerHeight;
+                spawnParticleStar(randomX, randomY);
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateHeaderStats();
+            renderReviews();
+            renderHighlights();
+        });
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = "toast-animate bg-white text-[#5C4A4D] px-5 py-3 rounded-2xl shadow-2xl border-2 border-[#F0CCD3] text-sm font-semibold flex items-center gap-2 pointer-events-auto";
+            toast.innerHTML = `<i class="fa-solid fa-crown text-[#D69CA6]"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        function alertBox(text) {
+            document.getElementById('msg-modal-text').innerText = text;
+            document.getElementById('msg-modal').classList.remove('hidden');
+        }
+
+        function closeMsgModal() {
+            document.getElementById('msg-modal').classList.add('hidden');
+        }
+
+        function openGate() {
+            const leftGate = document.getElementById('left-gate');
+            const rightGate = document.getElementById('right-gate');
+            const gateContainer = document.getElementById('gate-container');
+            const mainContent = document.getElementById('main-content');
+            const gateContent = document.getElementById('gate-content');
+
+            if (leftGate && rightGate && gateContainer && mainContent) {
+                gateContent.style.opacity = '0';
+                gateContent.style.transition = 'opacity 0.5s ease';
+                leftGate.classList.add('gate-open-left');
+                rightGate.classList.add('gate-open-right');
+
+                setTimeout(() => {
+                    gateContainer.style.opacity = '0';
+                    setTimeout(() => {
+                        gateContainer.style.display = 'none';
+                        mainContent.classList.remove('opacity-0', 'pointer-events-none');
+                    }, 1000);
+                }, 800);
+            }
+        }
+
+        function setRating(rating) {
+            currentRating = rating;
+            document.getElementById('rating-text').innerText = rating + '/5';
+            const stars = document.querySelectorAll('#star-rating i');
+            stars.forEach((star, idx) => {
+                if (idx < rating) {
+                    star.className = "fa-solid fa-star hover:scale-110 transition text-[#D69CA6]";
+                } else {
+                    star.className = "fa-solid fa-star hover:scale-110 transition text-gray-300";
+                }
+            });
+        }
+
+        function submitReview(e) {
+            e.preventDefault();
+            const name = document.getElementById('reviewer-name').value;
+            const comment = document.getElementById('review-comment').value;
+            const isVerified = document.getElementById('verify-real-review').checked;
+
+            if (!isVerified) {
+                alertBox("กรุณากดยืนยันว่ารีวิวนี้คือรีวิวจริง 100%");
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+            reviewsData.unshift({ name, rating: currentRating, comment, date: dateStr });
+            
+            updateHeaderStats();
+            renderReviews();
+            renderAdminReviewsList();
+
+            document.getElementById('review-form').reset();
+            setRating(5);
+            alertBox("ส่งรีวิวสำเร็จ ขอบคุณสำหรับคำติชมค่ะ 💖");
+        }
+
+        function updateHeaderStats() {
+            const totalCount = reviewsData.length;
+            const balanceElem = document.getElementById('display-balance');
+            const totalCountElem = document.getElementById('display-total-reviews-count');
+            const avgRatingElem = document.getElementById('display-avg-rating');
+
+            if (balanceElem) balanceElem.innerText = totalCount;
+            if (totalCountElem) totalCountElem.innerText = totalCount;
+
+            if (totalCount > 0) {
+                const totalRatingSum = reviewsData.reduce((sum, rev) => sum + rev.rating, 0);
+                const avg = (totalRatingSum / totalCount).toFixed(1);
+                if (avgRatingElem) avgRatingElem.innerText = avg;
+            } else {
+                if (avgRatingElem) avgRatingElem.innerText = '5.0';
+            }
+        }
+
+        function renderHighlights() {
+            const container = document.getElementById('highlight-container');
+            if (!container) return;
+            container.innerHTML = '';
+            highlightsData.forEach((group, index) => {
+                const firstMedia = group.items[0] ? group.items[0].url : 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600';
+                const div = document.createElement('div');
+                div.className = "flex flex-col items-center cursor-pointer group flex-shrink-0";
+                div.onclick = () => openStoryGroup(index);
+                div.innerHTML = `
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full p-[3px] bg-gradient-to-tr from-[#F0CCD3] to-[#D69CA6] group-hover:scale-105 transition shadow-md">
+                        <div class="w-full h-full rounded-full bg-white p-1 flex items-center justify-center overflow-hidden">
+                            ${group.items[0] && group.items[0].type === 'video' ? 
+                                `<video src="${firstMedia}" class="w-full h-full rounded-full object-cover"></video>` :
+                                `<div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('${firstMedia}')"></div>`
+                            }
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-700 mt-2 truncate max-w-[80px]">${escapeHtml(group.title)}</span>
+                `;
+                container.appendChild(div);
+            });
+            renderAdminHighlightsList();
+        }
+
+        function openStoryGroup(index) {
+            activeStoryGroupIndex = index;
+            activeStoryGroup = highlightsData[index];
+            activeStoryIndex = 0;
+            if (!activeStoryGroup || activeStoryGroup.items.length === 0) return;
+
+            document.getElementById('story-modal').classList.remove('hidden');
+            document.getElementById('story-modal-category').innerText = activeStoryGroup.title;
+            playStoryItem();
+        }
+
+        function playStoryItem() {
+            if (!activeStoryGroup) return;
+            const item = activeStoryGroup.items[activeStoryIndex];
+            const mediaWrapper = document.getElementById('story-media-wrapper');
+            const descElem = document.getElementById('story-modal-desc');
+
+            mediaWrapper.innerHTML = item.type === 'video' ?
+                `<video src="${item.url}" autoplay class="max-h-full max-w-full object-contain"></video>` :
+                `<img src="${item.url}" class="max-h-full max-w-full object-contain" />`;
+
+            descElem.innerText = item.caption || activeStoryGroup.title;
+
+            const progressContainer = document.getElementById('story-progress-container');
+            progressContainer.innerHTML = '';
+            activeStoryGroup.items.forEach((_, idx) => {
+                const bar = document.createElement('div');
+                bar.className = "flex-1 h-1 bg-white/30 rounded-full overflow-hidden";
+                const fill = document.createElement('div');
+                fill.className = "h-full bg-white transition-all duration-100";
+                if (idx < activeStoryIndex) fill.style.width = '100%';
+                else if (idx === activeStoryIndex) fill.style.width = '100%';
+                else fill.style.width = '0%';
+                bar.appendChild(fill);
+                progressContainer.appendChild(bar);
+            });
+
+            clearTimeout(storyTimer);
+            storyTimer = setTimeout(() => {
+                nextStoryItem();
+            }, 4000);
+        }
+
+        function nextStoryItem() {
+            if (!activeStoryGroup) return;
+            if (activeStoryIndex < activeStoryGroup.items.length - 1) {
+                activeStoryIndex++;
+                playStoryItem();
+            } else {
+                closeStory();
+            }
+        }
+
+        function prevStoryItem() {
+            if (!activeStoryGroup) return;
+            if (activeStoryIndex > 0) {
+                activeStoryIndex--;
+                playStoryItem();
+            }
+        }
+
+        function closeStory() {
+            clearTimeout(storyTimer);
+            document.getElementById('story-modal').classList.add('hidden');
+            activeStoryGroup = null;
+        }
+
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.remove('hidden');
+            if (isAdminLoggedIn) {
+                document.getElementById('admin-login-view').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                document.getElementById('auth-modal-close-btn').classList.remove('hidden');
+                switchAdminTab('store');
+            } else {
+                document.getElementById('admin-login-view').classList.remove('hidden');
+                document.getElementById('admin-dashboard-view').classList.add('hidden');
+                document.getElementById('auth-modal-close-btn').classList.remove('hidden');
+            }
+        }
+
+        function closeAuthModal() {
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === 'admin123' || pass === 'admin') {
+                isAdminLoggedIn = true;
+                document.getElementById('admin-login-view').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                document.getElementById('auth-modal-close-btn').classList.add('hidden');
+                renderAdminHighlightsList();
+                renderAdminReviewsList();
+                switchAdminTab('store');
+                showToast("เข้าสู่ระบบแอดมินแล้ว");
+            } else {
+                alertBox("รหัสผ่านแอดมินไม่ถูกต้อง (รหัสเริ่มต้น: admin123)");
+            }
+        }
+
+        function handleAdminLogout() {
+            isAdminLoggedIn = false;
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            document.getElementById('admin-login-view').classList.remove('hidden');
+            document.getElementById('admin-pass').value = '';
+            
+            closeAuthModal();
+            showToast("ออกจากระบบแอดมินแล้ว");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchAdminTab(tabName) {
+            const storeTab = document.getElementById('admin-tab-store');
+            const highlightsTab = document.getElementById('admin-tab-highlights');
+            const reviewsTab = document.getElementById('admin-tab-reviews');
+
+            const btnStore = document.getElementById('tab-btn-store');
+            const btnHighlights = document.getElementById('tab-btn-highlights');
+            const btnReviews = document.getElementById('tab-btn-reviews');
+
+            storeTab.classList.add('hidden');
+            highlightsTab.classList.add('hidden');
+            reviewsTab.classList.add('hidden');
+
+            btnStore.className = "flex-1 py-2.5 rounded-xl font-semibold text-xs transition text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1.5";
+            btnHighlights.className = "flex-1 py-2.5 rounded-xl font-semibold text-xs transition text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1.5";
+            btnReviews.className = "flex-1 py-2.5 rounded-xl font-semibold text-xs transition text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1.5";
+
+            if (tabName === 'store') {
+                storeTab.classList.remove('hidden');
+                btnStore.className = "flex-1 py-2.5 rounded-xl font-semibold text-xs transition bg-white text-[#5C4A4D] shadow-sm flex items-center justify-center gap-1.5";
+            } else if (tabName === 'highlights') {
+                highlightsTab.classList.remove('hidden');
+                btnHighlights.className = "flex-1 py-2.5 rounded-xl font-semibold text-xs transition bg-white text-[#5C4A4D] shadow-sm flex items-center justify-center gap-1.5";
+            } else if (tabName === 'reviews') {
+                reviewsTab.classList.remove('hidden');
+                btnReviews.className = "flex-1 py-2.5 rounded-xl font-semibold text-xs transition bg-white text-[#5C4A4D] shadow-sm flex items-center justify-center gap-1.5";
+            }
+        }
+
+        function updateStoreInfo() {
+            storeInfoData.title = document.getElementById('admin-store-title').value;
+            storeInfoData.brandTitle = document.getElementById('admin-brand-title').value || storeInfoData.title;
+            storeInfoData.subtitle = document.getElementById('admin-store-subtitle').value;
+            storeInfoData.hours = document.getElementById('admin-store-hours').value;
+            storeInfoData.response = document.getElementById('admin-store-response').value;
+            storeInfoData.facebook = document.getElementById('admin-facebook-url').value;
+            storeInfoData.line = document.getElementById('admin-line-url').value;
+
+            const navBrand = document.getElementById('nav-brand-title');
+            if (navBrand) {
+                navBrand.innerText = storeInfoData.brandTitle;
+            }
+
+            const heroTitle = document.getElementById('display-hero-title');
+            if (heroTitle) heroTitle.innerText = storeInfoData.title;
+
+            const heroSub = document.getElementById('display-hero-subtitle');
+            if (heroSub) heroSub.innerText = storeInfoData.subtitle;
+
+            const fbLink = document.getElementById('display-facebook-link');
+            if (fbLink) fbLink.href = storeInfoData.facebook;
+
+            const lineLink = document.getElementById('display-line-link');
+            if (lineLink) lineLink.href = storeInfoData.line;
+
+            showToast("บันทึกข้อมูลร้านค้าเรียบร้อยแล้ว");
+        }
+
+        function previewCoverImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const coverElem = document.getElementById('display-cover');
+                    if (coverElem) coverElem.style.backgroundImage = `url('${e.target.result}')`;
+                    showToast("เปลี่ยนรูปปกสำเร็จ");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewLogoImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const logoContainer = document.getElementById('display-logo-container');
+                    if (logoContainer) {
+                        logoContainer.style.backgroundImage = `url('${e.target.result}')`;
+                        logoContainer.innerHTML = '';
+                    }
+                    showToast("เปลี่ยนรูปร้าน/โลโก้สำเร็จ");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleFileSelection(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                const isVideo = file.type.startsWith('video');
+                reader.onload = function(e) {
+                    stagedHighlightItems.push({
+                        type: isVideo ? 'video' : 'image',
+                        url: e.target.result,
+                        caption: document.getElementById('highlight-caption-input').value || ''
+                    });
+                    renderStagedMediaPreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderStagedMediaPreview() {
+            const container = document.getElementById('staged-media-preview-container');
+            const countElem = document.getElementById('preview-count');
+            if (!container) return;
+            countElem.innerText = stagedHighlightItems.length;
+
+            if (stagedHighlightItems.length === 0) {
+                container.innerHTML = '<div class="col-span-3 text-center text-xs text-gray-400 py-3">ยังไม่มีไฟล์สื่อที่เลือก</div>';
+                return;
+            }
+
+            container.innerHTML = '';
+            stagedHighlightItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = "relative rounded-xl overflow-hidden border border-[#F0CCD3] h-20 bg-gray-50 flex items-center justify-center group";
+                div.innerHTML = `
+                    ${item.type === 'video' ? 
+                        `<video src="${item.url}" class="w-full h-full object-cover"></video>` :
+                        `<img src="${item.url}" class="w-full h-full object-cover" />`
+                    }
+                    <button type="button" onclick="removeStagedMedia(${index})" class="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-500 text-white text-xs flex items-center justify-center shadow hover:bg-red-600 transition" title="ลบรูปนี้">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function removeStagedMedia(index) {
+            stagedHighlightItems.splice(index, 1);
+            renderStagedMediaPreview();
+        }
+
+        function handleSaveHighlight(event) {
+            event.preventDefault();
+            const title = document.getElementById('highlight-title-input').value;
+            const editIndex = parseInt(document.getElementById('edit-highlight-index').value);
+            const caption = document.getElementById('highlight-caption-input').value;
+
+            if (stagedHighlightItems.length === 0 && editIndex === -1) {
+                alertBox("กรุณาเลือกไฟล์รูปภาพหรือวิดีโออย่างน้อย 1 ไฟล์");
+                return;
+            }
+
+            stagedHighlightItems.forEach(item => {
+                if (caption) item.caption = caption;
+            });
+
+            if (editIndex >= 0) {
+                highlightsData[editIndex].title = title;
+                if (stagedHighlightItems.length > 0) {
+                    highlightsData[editIndex].items = [...highlightsData[editIndex].items, ...stagedHighlightItems];
+                }
+                showToast("อัปเดตไฮไลท์สำเร็จ");
+            } else {
+                highlightsData.push({
+                    title: title,
+                    icon: "fa-star",
+                    items: [...stagedHighlightItems]
+                });
+                showToast("สร้างไฮไลท์ใหม่สำเร็จ");
+            }
+
+            resetHighlightForm();
+            renderHighlights();
+        }
+
+        function resetHighlightForm() {
+            document.getElementById('highlight-title-input').value = '';
+            document.getElementById('highlight-caption-input').value = '';
+            document.getElementById('highlight-files-input').value = '';
+            document.getElementById('edit-highlight-index').value = '-1';
+            document.getElementById('highlight-form-title').innerHTML = '<i class="fa-solid fa-circle-plus text-[#D69CA6]"></i> โหมดสร้างไฮไลท์ใหม่';
+            document.getElementById('highlight-submit-btn').innerText = 'บันทึกสร้างไฮไลท์ใหม่';
+            document.getElementById('highlight-cancel-btn').classList.add('hidden');
+            document.getElementById('edit-mode-badge').classList.add('hidden');
+            stagedHighlightItems = [];
+            renderStagedMediaPreview();
+        }
+
+        function editHighlight(index) {
+            const group = highlightsData[index];
+            document.getElementById('highlight-title-input').value = group.title;
+            document.getElementById('edit-highlight-index').value = index;
+            document.getElementById('highlight-form-title').innerHTML = '<i class="fa-solid fa-pen text-[#D69CA6]"></i> โหมดแก้ไขไฮไลท์';
+            document.getElementById('highlight-submit-btn').innerText = 'บันทึกการแก้ไขไฮไลท์';
+            document.getElementById('highlight-cancel-btn').classList.remove('hidden');
+            document.getElementById('edit-mode-badge').classList.remove('hidden');
+            stagedHighlightItems = [...group.items];
+            renderStagedMediaPreview();
+            switchAdminTab('highlights');
+        }
+
+        function deleteHighlightGroup(index) {
+            highlightsData.splice(index, 1);
+            renderHighlights();
+            showToast("ลบไฮไลท์สำเร็จ");
+        }
+
+        function renderAdminHighlightsList() {
+            const container = document.getElementById('admin-highlights-list');
+            if (!container) return;
+            container.innerHTML = '';
+            if (highlightsData.length === 0) {
+                container.innerHTML = '<div class="text-center text-xs text-gray-400 py-3">ยังไม่มีไฮไลท์</div>';
+                return;
+            }
+            highlightsData.forEach((group, index) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between p-3 bg-white rounded-2xl border border-[#F0CCD3] text-sm";
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#FDF3F5] text-[#D69CA6] flex items-center justify-center font-bold">
+                            ${index + 1}
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-xs">${escapeHtml(group.title)}</h5>
+                            <span class="text-[10px] text-gray-500">${group.items.length} รายการสื่อ</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="editHighlight(${index})" class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-xl text-xs font-semibold hover:bg-blue-100 transition">แก้ไข</button>
+                        <button onclick="deleteHighlightGroup(${index})" class="px-3 py-1.5 bg-red-50 text-red-600 rounded-xl text-xs font-semibold hover:bg-red-100 transition">ลบ</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviews-container');
+            if (!container) return;
+            container.innerHTML = '';
+            reviewsData.forEach((rev) => {
+                const starsHTML = '<i class="fa-solid fa-star text-[#D69CA6]"></i>'.repeat(rev.rating);
+                const div = document.createElement('div');
+                div.className = "bg-white p-5 rounded-3xl shadow-md border border-[#FAF1F4] flex flex-col gap-2";
+                div.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 rounded-full bg-[#FEF7F9] border border-[#F0CCD3] text-[#D69CA6] flex items-center justify-center text-sm font-bold shadow-sm">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm">${escapeHtml(rev.name)}</h4>
+                                <span class="text-[10px] text-gray-400">${escapeHtml(rev.date)}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 text-xs">
+                            ${starsHTML}
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-1 bg-[#FDF9FA] p-3 rounded-2xl border border-[#FAF1F4]">${escapeHtml(rev.comment)}</p>
+                `;
+                container.appendChild(div);
+            });
+            renderAdminReviewsList();
+        }
+
+        function renderAdminReviewsList() {
+            const container = document.getElementById('admin-reviews-list');
+            if (!container) return;
+            container.innerHTML = '';
+            if (reviewsData.index === 0 && reviewsData.length === 0) {
+                container.innerHTML = '<div class="text-center text-xs text-gray-400 py-3">ยังไม่มีรีวิว</div>';
+                return;
+            }
+            reviewsData.forEach((rev, index) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between p-3 bg-white rounded-2xl border border-[#F0CCD3] text-sm";
+                div.innerHTML = `
+                    <div class="flex-1 pr-3 truncate">
+                        <h5 class="font-bold text-gray-800 text-xs">${escapeHtml(rev.name)} <span class="text-amber-500 font-normal">(${rev.rating} ดาว)</span></h5>
+                        <p class="text-gray-500 text-[11px] truncate">${escapeHtml(rev.comment)}</p>
+                    </div>
+                    <button onclick="deleteReview(${index})" class="px-3 py-1.5 bg-red-50 text-red-600 rounded-xl text-xs font-semibold hover:bg-red-100 transition flex-shrink-0">ลบ</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteReview(index) {
+            reviewsData.splice(index, 1);
+            updateHeaderStats();
+            renderReviews();
+            renderAdminReviewsList();
+            showToast("ลบรีวิวสำเร็จ");
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
